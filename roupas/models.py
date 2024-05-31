@@ -1,6 +1,20 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.conf import settings
 
+class CustomUser(AbstractUser):
+     CLIENTE = 'cliente'
+     ADMINISTRADOR = 'administrador'
+
+     TIPO_CHOICES = [
+        (CLIENTE, 'Cliente'),
+        (ADMINISTRADOR, 'Administrador'),
+    ]
+
+     tipo = models.CharField(max_length=20, choices=TIPO_CHOICES, default=CLIENTE)
+
+     def __str__(self):
+        return self.username
 
 class Categoria(models.Model):
     FEMININO = 'F'
@@ -55,22 +69,9 @@ class Produto(models.Model):
     def __str__(self):
         return self.nome
 
-class CustomUser(AbstractUser):
-     CLIENTE = 'cliente'
-     ADMINISTRADOR = 'administrador'
-
-     TIPO_CHOICES = [
-        (CLIENTE, 'Cliente'),
-        (ADMINISTRADOR, 'Administrador'),
-    ]
-
-     tipo = models.CharField(max_length=20, choices=TIPO_CHOICES, default=CLIENTE)
-
-     def __str__(self):
-        return self.username
 
 class Cliente(models.Model):
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    nome = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     endereco = models.CharField(max_length=255)
     telefone = models.CharField(max_length=20)
     data_nascimento = models.DateField()
@@ -180,6 +181,23 @@ class Carrinho(models.Model):
     def __str__(self):
         return f'Carrinho {self.id} - {self.cliente.username}'
 
+class EnderecoEntrega(models.Model):
+        cliente = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
+        endereco = models.CharField(max_length=255, default='Seu valor padrão aqui')
+        cidade = models.CharField(max_length=100)
+        estado = models.CharField(max_length=100)
+        cep = models.CharField(max_length=20)
+        rua = models.CharField(max_length=100)
+       
+        def save(self, *args, **kwargs):
+         if not self.endereco:
+            self.endereco = 'Seu valor padrão aqui'
+         super().save(*args, **kwargs)
+
+        def __str__(self):
+         return f"Endereço de Entrega de {self.cliente.username}"
+
+
 class ItemCarrinho(models.Model):
     carrinho = models.ForeignKey(Carrinho, on_delete=models.CASCADE)
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
@@ -228,3 +246,16 @@ class HistoricoCompras(models.Model):
     def __str__(self):
         return f'{self.cliente} - {self.produto}'
     
+class EnderecoCobranca(models.Model):
+    cliente = models.ForeignKey(
+        Cliente, on_delete=models.CASCADE, related_name="enderecos_cobranca"
+    )
+    endereco = models.CharField(max_length=255)
+    cidade = models.CharField(max_length=100)
+    estado = models.CharField(max_length=100)
+    cep = models.CharField(max_length=20)
+    pais = models.CharField(max_length=100)
+    
+
+    def __str__(self):
+        return f"Endereço de Cobrança {self.id} - {self.cliente.username}"

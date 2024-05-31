@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import (
     Produto, Categoria, Cliente, Pedido, ItemPedido, Pagamento, 
     AvaliacaoProduto, Endereco, Carrinho, ItemCarrinho, CupomDesconto, 
-    Wishlist, ItemWishlist, HistoricoCompras, Marca,
+    Wishlist, ItemWishlist, HistoricoCompras, Marca,EnderecoEntrega,EnderecoCobranca
 )
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .models import CustomUser
@@ -40,7 +40,10 @@ class MarcaAdmin(admin.ModelAdmin):
     list_display = ('nome',)
     search_fields = ('nome',)
 
-
+@admin.register(EnderecoEntrega)
+class EnderecoEntregaAdmin(admin.ModelAdmin):
+    list_display = ['cliente', 'endereco', 'cidade', 'estado', 'cep']
+    search_fields = ['cliente__username', 'endereco', 'cidade', 'estado', 'cep']
 
 @admin.register(Cliente)
 class ClienteAdmin(admin.ModelAdmin):
@@ -123,3 +126,12 @@ class GeneroListFilter(admin.SimpleListFilter):
         if self.value():
             return queryset.filter(genero=self.value())
         return queryset
+    
+@admin.register(EnderecoCobranca)
+class EnderecoCobrancaAdmin(admin.ModelAdmin):
+    list_display = ['cliente', 'endereco', 'cidade', 'estado', 'cep']
+    search_fields = ['cliente__user__username', 'endereco', 'cidade', 'estado']
+    list_filter = ('cidade', 'estado')
+
+    def cliente(self, obj):
+      return obj.cliente.user.username
