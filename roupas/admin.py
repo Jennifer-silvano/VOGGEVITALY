@@ -2,12 +2,11 @@ from django.contrib import admin
 from .models import (
     Produto, Categoria, Cliente, Pedido, ItemPedido, Pagamento, 
     AvaliacaoProduto, Endereco, Carrinho, ItemCarrinho, CupomDesconto, 
-    Wishlist, ItemWishlist, HistoricoCompras, EnderecoCobranca, EnderecoEntrega, Marca,
+    Wishlist, ItemWishlist, HistoricoCompras, Marca,
 )
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .models import CustomUser
 from django.contrib.auth.models import Group
-
 
 
 admin.site.unregister(Group)
@@ -108,15 +107,6 @@ class ItemWishlistAdmin(admin.ModelAdmin):
 @admin.register(HistoricoCompras)
 class HistoricoComprasAdmin(admin.ModelAdmin):
     list_display = ['cliente', 'produto', 'quantidade', 'data_compra']
-
-@admin.register(EnderecoCobranca)
-class EnderecoCobrancaAdmin(admin.ModelAdmin):
-    list_display = ['cliente', 'endereco', 'cidade', 'estado', 'cep', 'pais']
-
-@admin.register(EnderecoEntrega)
-class EnderecoEntregaAdmin(admin.ModelAdmin):
-    list_display = ['rua', 'cidade', 'estado', 'cep']
-
 
 class GeneroListFilter(admin.SimpleListFilter):
     title = 'Gênero'

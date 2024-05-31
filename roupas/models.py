@@ -1,7 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.contrib.auth.models import User
-
 
 
 class Categoria(models.Model):
@@ -76,9 +74,9 @@ class Cliente(models.Model):
     endereco = models.CharField(max_length=255)
     telefone = models.CharField(max_length=20)
     data_nascimento = models.DateField()
-    cidade = models.CharField(max_length=100)
-    estado = models.CharField(max_length=50)
-    cep = models.CharField(max_length=10)
+    cidade = models.CharField(max_length=100, default='DefaultCity')  # Adiciona um valor padrão
+    estado = models.CharField(max_length=50, default='Estado Padrão')
+    cep = models.CharField(max_length=10, default='00000-000')
 
     class Meta:
         verbose_name = 'Cliente'
@@ -211,20 +209,6 @@ class ItemWishlist(models.Model):
         return f'Item {self.id} - Wishlist {self.wishlist.id}'
 
 
-from django.db import models
-
-class EnderecoEntrega(models.Model):
-    # Defina os campos necessários para o endereço de entrega
-    rua = models.CharField(max_length=100)
-    cidade = models.CharField(max_length=100)
-    estado = models.CharField(max_length=100)
-    cep = models.CharField(max_length=10)
-
-    # Adicione outros campos conforme necessário
-
-    def __str__(self):
-        return f'{self.rua}, {self.cidade}, {self.estado}, {self.cep}'
-
 
 class CupomDesconto(models.Model):
     codigo = models.CharField(max_length=50)
@@ -244,11 +228,3 @@ class HistoricoCompras(models.Model):
     def __str__(self):
         return f'{self.cliente} - {self.produto}'
     
-
-class EnderecoCobranca(models.Model):
-    cliente = models.ForeignKey('Cliente', on_delete=models.CASCADE)
-    endereco = models.CharField(max_length=255)
-    cidade = models.CharField(max_length=100)
-    estado = models.CharField(max_length=100)
-    cep = models.CharField(max_length=20)
-    pais = models.CharField(max_length=100)
