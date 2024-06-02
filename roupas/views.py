@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 from django.utils import timezone
 from .models import Produto, Categoria, CustomUser , Pedido, ItemPedido, Pagamento, AvaliacaoProduto, Endereco, Carrinho, ItemCarrinho, EnderecoEntrega, CupomDesconto, Wishlist, ItemWishlist, HistoricoCompras, EnderecoCobranca
 
+
 class ProdutoListView(ListView):
     model = Produto
     template_name = 'produto_list.html'

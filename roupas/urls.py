@@ -1,12 +1,10 @@
 from django.urls import path
-from django.contrib import admin
-
-from .views import ProdutoListView, ProdutoDetailView, ProdutoCreateView, ProdutoUpdateView, ProdutoDeleteView
+from . import views
 
 urlpatterns = [
-    path('produtos/', ProdutoListView.as_view(), name='produto_list'),
-    path('produtos/<int:pk>/', ProdutoDetailView.as_view(), name='produto_detail'),
-    path('produtos/novo/', ProdutoCreateView.as_view(), name='produto_create'),
-    path('produtos/<int:pk>/editar/', ProdutoUpdateView.as_view(), name='produto_update'),
-    path('produtos/<int:pk>/deletar/', ProdutoDeleteView.as_view(), name='produto_delete'),
+    path('', views.ProdutoListView.as_view(), name='produto_list'),
+    path('<int:pk>/', views.ProdutoDetailView.as_view(), name='produto_detail'),
+    path('novo/', views.ProdutoCreateView.as_view(), name='produto_create'),
+    path('<int:pk>/editar/', views.ProdutoUpdateView.as_view(), name='produto_update'),
+    path('<int:pk>/deletar/', views.ProdutoDeleteView.as_view(), name='produto_delete'),
 ]

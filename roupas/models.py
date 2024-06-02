@@ -1,20 +1,40 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
+from django.contrib.auth import get_user_model  # Importe get_user_model
+
 
 class CustomUser(AbstractUser):
-     CLIENTE = 'cliente'
-     ADMINISTRADOR = 'administrador'
+    CLIENTE = 'cliente'
+    ADMINISTRADOR = 'administrador'
 
-     TIPO_CHOICES = [
+    TIPO_CHOICES = [
         (CLIENTE, 'Cliente'),
         (ADMINISTRADOR, 'Administrador'),
     ]
 
-     tipo = models.CharField(max_length=20, choices=TIPO_CHOICES, default=CLIENTE)
+    tipo = models.CharField(max_length=20, choices=TIPO_CHOICES, default=CLIENTE)
 
-     def __str__(self):
+    def __str__(self):
         return self.username
+
+
+class Cliente(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    endereco = models.CharField(max_length=255)
+    telefone = models.CharField(max_length=20)
+    data_nascimento = models.DateField()
+    cidade = models.CharField(max_length=100, default='DefaultCity')
+    estado = models.CharField(max_length=50, default='Estado Padrão')
+    cep = models.CharField(max_length=10, default='00000-000')
+
+    class Meta:
+        verbose_name = 'Cliente'
+        verbose_name_plural = 'Clientes'
+
+    def __str__(self):
+        return self.user.username
+
 
 class Categoria(models.Model):
     FEMININO = 'F'
@@ -37,10 +57,11 @@ class Categoria(models.Model):
 class Marca(models.Model):
     nome = models.CharField(max_length=100)
     descricao = models.TextField(blank=True, null=True)
-    logo_url = models.URLField(blank=True, null=True)  # URL para o logo da marca
+    logo_url = models.URLField(blank=True, null=True)
 
     def __str__(self):
         return self.nome
+
 
 class Produto(models.Model):
     FEMININO = 'F'
@@ -70,23 +91,6 @@ class Produto(models.Model):
         return self.nome
 
 
-class Cliente(models.Model):
-    nome = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    endereco = models.CharField(max_length=255)
-    telefone = models.CharField(max_length=20)
-    data_nascimento = models.DateField()
-    cidade = models.CharField(max_length=100, default='DefaultCity')  # Adiciona um valor padrão
-    estado = models.CharField(max_length=50, default='Estado Padrão')
-    cep = models.CharField(max_length=10, default='00000-000')
-
-    class Meta:
-        verbose_name = 'Cliente'
-        verbose_name_plural = 'Clientes'
-       
-
-    def __str__(self):
-        return self.user.username
-   
 class Pedido(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     data_pedido = models.DateTimeField(auto_now_add=True)
@@ -104,7 +108,7 @@ class Pedido(models.Model):
     data_atualizacao = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Pedido {self.id} - {self.cliente.username}"
+        return f"Pedido {self.id} - {self.cliente.user.username}"
 
 
 class ItemPedido(models.Model):
@@ -112,7 +116,6 @@ class ItemPedido(models.Model):
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
     quantidade = models.IntegerField()
     preco_unitario = models.DecimalField(max_digits=10, decimal_places=2)
-   
 
     def __str__(self):
         return f"Item {self.id} - {self.pedido.id}"
@@ -138,7 +141,6 @@ class Pagamento(models.Model):
     )
     data_pagamento = models.DateTimeField()
     valor_pago = models.DecimalField(max_digits=10, decimal_places=2)
-    
 
     def __str__(self):
         return f"Pagamento {self.id} - {self.pedido.id}"
@@ -170,7 +172,7 @@ class Endereco(models.Model):
     data_atualizacao = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Endereço {self.id} - {self.cliente.username}"
+        return f"Endereço {self.id} - {self.cliente.user.username}"
 
 
 class Carrinho(models.Model):
@@ -179,23 +181,7 @@ class Carrinho(models.Model):
     data_atualizacao = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'Carrinho {self.id} - {self.cliente.username}'
-
-class EnderecoEntrega(models.Model):
-        cliente = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
-        endereco = models.CharField(max_length=255, default='Seu valor padrão aqui')
-        cidade = models.CharField(max_length=100)
-        estado = models.CharField(max_length=100)
-        cep = models.CharField(max_length=20)
-        rua = models.CharField(max_length=100)
-       
-        def save(self, *args, **kwargs):
-         if not self.endereco:
-            self.endereco = 'Seu valor padrão aqui'
-         super().save(*args, **kwargs)
-
-        def __str__(self):
-         return f"Endereço de Entrega de {self.cliente.username}"
+        return f'Carrinho {self.id} - {self.cliente.user.username}'
 
 
 class ItemCarrinho(models.Model):
@@ -215,18 +201,16 @@ class Wishlist(models.Model):
     data_atualizacao = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'Wishlist {self.id} - {self.cliente.username}'
+        return f'Wishlist {self.id} - {self.cliente.user.username}'
 
 class ItemWishlist(models.Model):
     wishlist = models.ForeignKey(Wishlist, on_delete=models.CASCADE)
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
     data_criacao = models.DateTimeField(auto_now_add=True)
-    data_atualizacao = models.DateTimeField(auto_now=True)
+    data_atualizacao = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f'Item {self.id} - Wishlist {self.wishlist.id}'
-
-
 
 class CupomDesconto(models.Model):
     codigo = models.CharField(max_length=50)
@@ -235,7 +219,6 @@ class CupomDesconto(models.Model):
 
     def __str__(self):
         return self.codigo
-    
 
 class HistoricoCompras(models.Model):
     cliente = models.ForeignKey('Cliente', on_delete=models.CASCADE)
@@ -244,18 +227,37 @@ class HistoricoCompras(models.Model):
     data_compra = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.cliente} - {self.produto}'
+        return f'{self.cliente.user.username} - {self.produto.nome}'
     
+from django.conf import settings  # Importe settings
+
+class EnderecoEntrega(models.Model):
+    cliente = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
+    endereco = models.CharField(max_length=255, default='Seu valor padrão aqui')
+    cidade = models.CharField(max_length=100)
+    estado = models.CharField(max_length=100)
+    cep = models.CharField(max_length=20)
+    rua = models.CharField(max_length=100)
+
+    def save(self, *args, **kwargs):
+        if not self.endereco:
+            self.endereco = 'Seu valor padrão aqui'
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"Endereço de Entrega de {self.cliente.username}"  # Corrija a referência ao nome do usuário
+
+
 class EnderecoCobranca(models.Model):
-    cliente = models.ForeignKey(
-        Cliente, on_delete=models.CASCADE, related_name="enderecos_cobranca"
-    )
+    cliente = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="enderecos_cobranca")
     endereco = models.CharField(max_length=255)
     cidade = models.CharField(max_length=100)
     estado = models.CharField(max_length=100)
     cep = models.CharField(max_length=20)
     pais = models.CharField(max_length=100)
-    
 
     def __str__(self):
-        return f"Endereço de Cobrança {self.id} - {self.cliente.username}"
+        return f"Endereço de Cobrança de {self.cliente.username}"  # Corrija a referência ao nome do usuário
+
+
+
