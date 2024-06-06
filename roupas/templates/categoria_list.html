@@ -9,7 +9,7 @@
 </head>
 <body>
     <nav class="navbar">
-        <div class="logo">Nome da Loja</div>
+        <div class="logo">VOGGE VITALY</div>
         <div class="nav-buttons">
             <a href="#">Categorias</a>
             <a href="#">Perfil</a>
@@ -18,12 +18,13 @@
     </nav>
 
     <header class="header">
-        <img src="{% static 'images/marca.jpg' %}" alt="Marca" class="brand-image">
+        <img src="{% static 'images/marca.png' %}" alt="Marca" class="brand-image">
+
     </header>
 
     <main class="categories">
         <div class="category">
-            <h2 <a href="{% url 'produto_list' genero='Masculino' %}">Masculino</h2>>
+            <h2 <a href="{% url 'produto_list' genero='Masculino' %}">Masculino</h2>
             {% for categoria in categorias %}
                 {% if categoria.genero == 'Masculino' %}
                     <div class="category-item">
@@ -49,7 +50,7 @@
     <footer class="footer">
         <div class="about-us">
             <h3>Sobre a Loja</h3>
-            <p>Informações sobre a loja...</p>
+            <p>Bem-vindo à Vogge Vitaly, o seu destino definitivo para moda de alta qualidade que reflete o estilo e a elegância contemporânea. Aqui, na nossa boutique exclusiva, encontrará uma seleção cuidadosamente selecionada de roupas femininas e masculinas que capturam a essência da moda de grife. Desde os vestidos mais deslumbrantes até os ternos mais impecáveis, cada peça da Vogge Vitaly é uma expressão de sofisticação e qualidade excepcional. Permita-se mergulhar em um mundo de luxo e estilo na Vogge Vitaly, onde cada peça conta uma história de elegância e distinção.</p>
         </div>
         <div class="social-media">
             <h3>Redes Sociais</h3>

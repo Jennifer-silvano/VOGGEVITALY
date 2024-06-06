@@ -3,7 +3,11 @@ body {
     margin: 0;
     padding: 0;
 }
-
+.background {
+    background-color: #555;
+    background-size: cover; /* Redimensionar a imagem para cobrir todo o fundo */
+    background-position: center; /* Posicionar a imagem no centro */
+}
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -50,11 +54,13 @@ body {
 }
 
 .category-item {
-    margin: 20px 0;
+    position: relative; /* Permitir posicionar os botões relativamente a esta div */
+    display: inline-block; /* Permitir que várias divs fiquem na mesma linha */
+    margin: 10px; /* Espaçamento entre as categorias */
 }
 
 .category-item img {
-    max-width: 100%;
+    width: 100%;
     height: auto;
 }
 
