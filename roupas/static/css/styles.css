@@ -1,0 +1,94 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+}
+
+.navbar .logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.navbar .nav-buttons a {
+    color: white;
+    margin-left: 20px;
+    text-decoration: none;
+}
+
+.navbar .nav-buttons a:hover {
+    text-decoration: underline;
+}
+
+.header {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.header .brand-image {
+    max-width: 100%;
+    height: auto;
+}
+
+.categories {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px;
+}
+
+.category {
+    width: 45%;
+    text-align: center;
+}
+
+.category-item {
+    margin: 20px 0;
+}
+
+.category-item img {
+    max-width: 100%;
+    height: auto;
+}
+
+.button {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.button:hover {
+    background-color: #555;
+}
+
+.footer {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.footer .about-us,
+.footer .social-media {
+    margin-bottom: 20px;
+}
+
+.footer .social-media a {
+    margin: 0 10px;
+}
+
+.footer .social-media img {
+    width: 30px;
+    height: 30px;
+}

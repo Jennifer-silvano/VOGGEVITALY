@@ -3,10 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title >Detalhes do Produto</title>
 </head>
 <body>
-    <h1>olá mundo</h1>
-    <h2>Uma vez flamengo sempre flamengo</h2>
+    <h1>Lista de Produtos</h1>
+    <div>
+        {% for produto in produtos %}
+            <div class="produto">
+                <h2>{{ produto.nome }}</h2>
+                <p>Preço: R$ {{ produto.preco }}</p>
+                <p>Cor: {{ produto.cor }}</p>
+                {% if produto.foto_url %}
+                    <img src="{{ produto.foto_url }}" alt="{{ produto.nome }}">
+                {% else %}
+                    <p>Sem imagem disponível</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
 </body>
 </html>

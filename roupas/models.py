@@ -9,6 +9,7 @@ class Categoria(models.Model):
         ('Unissex', 'Unissex'),
     ]
     genero = models.CharField(max_length=10, choices=genero_choices)
+    foto_url = models.URLField(max_length=200, blank=True) 
 
     def __str__(self):
         return self.nome
@@ -20,16 +21,10 @@ class Marca(models.Model):
         return self.nome
 
 class Tamanho(models.Model):
-    nome = models.CharField(max_length=10, choices=[
-        ('PP', 'PP'),
-        ('P', 'P'),
-        ('M', 'M'),
-        ('G', 'G'),
-        ('GG', 'GG'),
-        ('Extra GG', 'Extra GG'),])
-
+    nome = models.CharField(max_length=100)
     def __str__(self):
         return self.nome
+    
 class Produto(models.Model):
     nome = models.CharField(max_length=100)
     descricao = models.TextField()
@@ -37,9 +32,14 @@ class Produto(models.Model):
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     marca = models.ForeignKey(Marca, on_delete=models.CASCADE)
     foto_url = models.URLField()
-    tamanho = models.ManyToManyField(Tamanho)
     cor = models.CharField(max_length=50)
-    genero = models.CharField(max_length=10)
+    genero_choices = [
+        ('Feminino', 'Feminino'),
+        ('Masculino', 'Masculino'),
+        ('Unissex', 'Unissex'),
+    ]
+    genero = models.CharField(max_length=10, choices=genero_choices)
+    
 
     def __str__(self):
         return self.nome
@@ -47,13 +47,15 @@ class Produto(models.Model):
 class Carrinho(models.Model):
     usuario = models.OneToOneField(User, on_delete=models.CASCADE)
     produtos = models.ManyToManyField(Produto)
+    
 
     def calcular_total(self):
         total = 0
         for produto in self.produtos.all():
             total += produto.preco
         return total
-
+    def __str__(self):
+        return f'Carrinho de {self.usuario.username}'
 class Pedido(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     produtos = models.ManyToManyField(Produto)
