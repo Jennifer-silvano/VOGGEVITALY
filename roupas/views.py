@@ -1,5 +1,5 @@
 # views.py
-from django.shortcuts import render, get_object_or_404,HttpResponse
+from django.shortcuts import render, get_object_or_404,redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.utils import timezone
@@ -78,5 +78,6 @@ def adicionar_carrinho(request):
         produto_id = data.get('produto_id')
         produto = get_object_or_404(Produto, id=produto_id)
         Carrinho.objects.create(produto=produto, usuario=request.user)
-        return HttpResponse(status=200)
-    return HttpResponse(status=400)
+        return redirect('carrinho')
+
+    return redirect('categoria_list')

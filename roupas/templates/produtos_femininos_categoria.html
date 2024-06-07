@@ -23,6 +23,7 @@
     <div class="produtos">
         {% for produto in produtos %}
         <div class="produto">
+            <p>{{produto.nome}}</p>
             <img src="{{ produto.foto_url }}" alt="{{ produto.nome }}">
             <p>Preço: R$ {{ produto.preco }}</p>
             <p>Cores disponíveis: {{ produto.cor }}</p>

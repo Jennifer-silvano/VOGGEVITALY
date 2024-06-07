@@ -36,19 +36,23 @@ body {
 }
 
 
-.produtos-container {
+.produtos {
+    width: 100%;
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
-    gap: 20px;
+    margin-bottom: 20px;
 }
 
 /* Estilos para cada produto */
 .produto {
-    border: 1px solid #d5d2d2;
-    padding: 20px;
+    width: 200px; /* Define a largura das categorias para ficarem lado a lado */
+    margin: 10px;
+    text-align: center;
+    border: 1px solid #ccc;
+    padding: 10px;
     border-radius: 5px;
     background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Estilos para o título do produto */
