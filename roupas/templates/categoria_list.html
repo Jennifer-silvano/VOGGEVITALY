@@ -24,7 +24,7 @@
 
     <main class="categories">
         <div class="category">
-            <h2 <a href="{% url 'produto_list' genero='Masculino' %}">Masculino</h2>
+            <h2> <a href="{% url 'produto_list' genero='Masculino' %}">Masculino</h2>
             {% for categoria in categorias %}
                 {% if categoria.genero == 'Masculino' %}
                     <div class="category-item">
