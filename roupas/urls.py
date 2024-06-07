@@ -3,7 +3,7 @@ from . import views
 from .views import CategoriaListView,CarrinhoView,ProdutoListView
 
 urlpatterns = [
-     path('produtos/<str:genero>/', ProdutoListView.as_view(), name='produto_list'),
+    path('produtos/<str:genero>/', ProdutoListView.as_view(), name='produto_list'),
     path('produtos/<int:pk>/', views.ProdutoDetailView.as_view(), name='produto_detail'),  # Detalhes do produto
     path('produtos/novo/', views.ProdutoCreateView.as_view(), name='produto_create'),  # Criar produto
     path('produtos/<int:pk>/editar/', views.ProdutoUpdateView.as_view(), name='produto_update'),  # Editar produto

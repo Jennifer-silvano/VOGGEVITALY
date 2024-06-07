@@ -3,9 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>{{ produto.nome }}</title>
 </head>
 <body>
-    
+    <h1>{{ produto.nome }}</h1>
+    <p>Descrição: {{ produto.descricao }}</p>
+    <p>Cor: {{ produto.cor }}</p>
+    <p>Marca: {{ produto.marca }}</p>
+    <form action="{% url 'carrinho' %}" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="produto_id" value="{{ produto.id }}">
+        <button class="button" type="submit">Adicionar ao carrinho</button>
+    </form>
+    <a href="{% url 'categoria_list' %}">Voltar</a>
 </body>
 </html>

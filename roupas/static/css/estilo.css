@@ -1,0 +1,108 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #000000;
+    color: white;
+    padding: 10px 20px;
+}
+
+.navbar .logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.navbar .nav-buttons a {
+    color: white;
+    margin-left: 20px;
+    text-decoration: none;
+}
+
+.navbar .nav-buttons a:hover {
+    text-decoration: underline;
+}
+
+.header {
+    
+    text-align: center;
+    margin: 20px 0;
+}
+
+
+.produtos-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* Estilos para cada produto */
+.produto {
+    border: 1px solid #d5d2d2;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para o título do produto */
+.produto h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+/* Estilos para o preço do produto */
+.produto .preco {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Estilos para a lista de cores do produto */
+.produto .cores {
+    margin-bottom: 10px;
+}
+
+/* Estilos para a imagem do produto */
+.produto img {
+    max-width: 200px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+/* Estilos para os botões */
+.button {
+    background-color: #1a1717;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 5px;
+}
+
+.button:hover {
+    background-color: #292b2d;
+}
+
+/* Estilos para o botão de adicionar ao carrinho */
+.button-ad {
+    background-color: #1a1717;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 5px;
+}
+
+.button-ad:hover{
+    background-color: #292b2d;
+}
