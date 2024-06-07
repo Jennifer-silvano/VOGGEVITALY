@@ -48,10 +48,9 @@ class ProdutoDetailView(DetailView):
     template_name = 'produto_detail.html'
     context_object_name = 'produto'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
-
+def produto_detail_view(request, pk):
+    produto = get_object_or_404(Produto, pk=pk)
+    return render(request, 'produto_detail.html', {'produto': produto})
 class CategoriaListView(ListView):
     model = Categoria
     template_name = 'categoria_list.html'

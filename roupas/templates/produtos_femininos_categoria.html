@@ -27,7 +27,7 @@
             <img src="{{ produto.foto_url }}" alt="{{ produto.nome }}">
             <p>Preço: R$ {{ produto.preco }}</p>
             <p>Cores disponíveis: {{ produto.cor }}</p>
-            <button class="button" onclick="window.location.href='{% url 'produto_detail' produto.id %}'">Descrição</button>
+            <button a href="{% url 'produto_detail' produto.pk %}" class="button">Descrição</a></button>
             <form action="{% url 'carrinho' %}" method="POST">
             {% csrf_token %}
             <input type="hidden" name="produto_id" value="{{ produto.id }}">
