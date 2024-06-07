@@ -1,27 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Produtos por Categoria</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
+    <script src="{% static 'caminho/para/seu/script.js' %}"></script>
 </head>
 <body>
-    <h1>Produtos da categoria {{ categoria }}</h1>
+   
+    <header class="navbar">
+        <div class="logo">Vogge vittaly</div>
+        <nav class="nav-buttons">
+            <a href="{% url 'categoria_list' %}">Home</a>
+            <a href="{% url 'categoria_list' %}">Categorias</a>
+            <a href="#">Perfil</a>
+            <a href="#">Carrinho</a>
+        </nav>
+    </header>
+    <h1>{{ categoria }}</h1>
     <div class="produtos">
         {% for produto in produtos %}
         <div class="produto">
-            <h3>{{ produto.nome }}</h3>
             <img src="{{ produto.foto_url }}" alt="{{ produto.nome }}">
             <p>Preço: R$ {{ produto.preco }}</p>
             <p>Cores disponíveis: {{ produto.cor }}</p>
-            <button onclick="mostrarDescricao('{{ produto.descricao }}')">Descrição</button>
+            <button class="button" onclick="window.location.href='{% url 'produto_detail' produto.id %}'">Descrição</button>
             <form action="{% url 'carrinho' %}" method="POST">
             {% csrf_token %}
             <input type="hidden" name="produto_id" value="{{ produto.id }}">
             <button type="submit">Adicionar ao carrinho</button>
+            
         </form>
         </div>
         {% endfor %}
-    </div>
-</body>
-</html>
+
+    </body>
+    </html>
