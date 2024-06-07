@@ -10,6 +10,7 @@ urlpatterns = [
     path('produtos/<int:pk>/deletar/', views.ProdutoDeleteView.as_view(), name='produto_delete'),  # Deletar produto
     path('', CategoriaListView.as_view(), name='categoria_list'),
     path('carrinho/', CarrinhoView.as_view(), name='carrinho'),
-
+    path('produtos/masculino/<str:categoria_nome>/', views.produtos_por_categoria, name='produtos_masculinos_categoria'),
+    path('produtos/feminino/<str:categoria_nome>/', views.produtos_por_categoria, name='produtos_femininos_categoria'),
     path('produtos/<str:genero>/', views.ProdutoListView.as_view(), name='produtos_genero'),
 ]

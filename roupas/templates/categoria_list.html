@@ -8,55 +8,50 @@
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="logo">VOGGE VITALY</div>
-        <div class="nav-buttons">
-            <a href="#">Categorias</a>
+    <header class="navbar">
+        <div class="logo">Vogge vittaly</div>
+        <nav class="nav-buttons">
+            <a href="{% url 'categoria_list' %}">Home</a>
+            <a href="{% url 'categoria_list' %}">Categorias</a>
             <a href="#">Perfil</a>
             <a href="#">Carrinho</a>
-        </div>
-    </nav>
-
+        </nav>
+    </header>
     <header class="header">
         <img src="{% static 'images/marca.png' %}" alt="Marca" class="brand-image">
-
     </header>
-
     <main class="categories">
-        <div class="category">
-            <h2> <a href="{% url 'produto_list' genero='Masculino' %}">Masculino</h2>
-            {% for categoria in categorias %}
-                {% if categoria.genero == 'Masculino' %}
-                    <div class="category-item">
-                        <img src="{{ categoria.foto_url }}" alt="{{ categoria.nome }}">
-                        <a href="{% url 'produto_list' genero='Masculino' %}" class="button">{{ categoria.nome }}</a>
-                    </div>
-                {% endif %}
-            {% endfor %}
-        </div>
-        <div class="category">
+        <section class="category">
             <h2>Feminino</h2>
             {% for categoria in categorias %}
                 {% if categoria.genero == 'Feminino' %}
                     <div class="category-item">
                         <img src="{{ categoria.foto_url }}" alt="{{ categoria.nome }}">
-                        <a href="{% url 'produtos_genero' genero='Feminino' %}" class="button">{{ categoria.nome }}</a>
+                        <a href="{% url 'produtos_femininos_categoria' categoria.nome %}" class="button">{{ categoria.nome }}</a>
                     </div>
                 {% endif %}
             {% endfor %}
-        </div>
+        </section>
+        <section class="category">
+            <h2>Masculino</h2>
+            {% for categoria in categorias %}
+                {% if categoria.genero == 'Masculino' %}
+                    <div class="category-item">
+                        <img src="{{ categoria.foto_url }}" alt="{{ categoria.nome }}">
+                        <a href="{% url 'produtos_femininos_categoria' categoria.nome %}" class="button">{{ categoria.nome }}</a>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </section>
     </main>
-
     <footer class="footer">
         <div class="about-us">
-            <h3>Sobre a Loja</h3>
-            <p>Bem-vindo à Vogge Vitaly, o seu destino definitivo para moda de alta qualidade que reflete o estilo e a elegância contemporânea. Aqui, na nossa boutique exclusiva, encontrará uma seleção cuidadosamente selecionada de roupas femininas e masculinas que capturam a essência da moda de grife. Desde os vestidos mais deslumbrantes até os ternos mais impecáveis, cada peça da Vogge Vitaly é uma expressão de sofisticação e qualidade excepcional. Permita-se mergulhar em um mundo de luxo e estilo na Vogge Vitaly, onde cada peça conta uma história de elegância e distinção.</p>
+            <p>Sobre a loja</p>
+            <p>A Vogge Vittaly é uma loja de roupas versátil e moderna, especializada em oferecer as últimas tendências da moda feminina e masculina. Com uma seleção cuidadosamente curada de peças de alta qualidade, a Vogge Vittaly se destaca por seu compromisso com a elegância e o estilo, atendendo aos gostos mais variados e exigentes. Seja para ocasiões casuais ou eventos especiais, a loja proporciona uma experiência de compra única, onde cada cliente encontra exatamente o que precisa para expressar sua personalidade e bom gosto. Venha descobrir as novidades e se encantar com a sofisticação da Vogge Vittaly.</p>
         </div>
         <div class="social-media">
-            <h3>Redes Sociais</h3>
-            <a href="#"><img src="{% static 'images/facebook_icon.png' %}" alt="Facebook"></a>
-            <a href="#"><img src="{% static 'images/instagram_icon.png' %}" alt="Instagram"></a>
-            <a href="#"><img src="{% static 'images/twitter_icon.png' %}" alt="Twitter"></a>
+            <a href="#"><img src="{% static 'images/facebook.png' %}" alt="Facebook">VOGGEVITTALY</a>
+            <a href="#"><img src="{% static 'images/instagram.png' %}" alt="Instagram">@VOGGEVITTALY</a>
         </div>
     </footer>
 </body>

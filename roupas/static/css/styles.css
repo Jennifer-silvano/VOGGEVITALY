@@ -2,17 +2,14 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+
 }
-.background {
-    background-color: #555;
-    background-size: cover; /* Redimensionar a imagem para cobrir todo o fundo */
-    background-position: center; /* Posicionar a imagem no centro */
-}
+
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #333;
+    background-color: #000000;
     color: white;
     padding: 10px 20px;
 }
@@ -33,49 +30,60 @@ body {
 }
 
 .header {
+    
     text-align: center;
     margin: 20px 0;
 }
 
 .header .brand-image {
-    max-width: 100%;
-    height: auto;
+    width: 200px;
+    height: 200px;
 }
 
 .categories {
     display: flex;
-    justify-content: space-around;
-    margin: 20px;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-size: cover;
 }
 
 .category {
-    width: 45%;
-    text-align: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
 }
 
 .category-item {
-    position: relative; /* Permitir posicionar os botões relativamente a esta div */
-    display: inline-block; /* Permitir que várias divs fiquem na mesma linha */
-    margin: 10px; /* Espaçamento entre as categorias */
+    width: 200px; /* Define a largura das categorias para ficarem lado a lado */
+    margin: 10px;
+    text-align: center;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #fff;
 }
 
 .category-item img {
-    width: 100%;
-    height: auto;
+    max-width: 200px;
+    width: 160px;
+    height: 150px;
 }
 
 .button {
     display: inline-block;
     margin-top: 10px;
     padding: 10px 20px;
-    background-color: #333;
+    background-color: #000000;
     color: white;
     text-decoration: none;
     border-radius: 5px;
 }
 
 .button:hover {
-    background-color: #555;
+    background-color: #463c3c;
 }
 
 .footer {

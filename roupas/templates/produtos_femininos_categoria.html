@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos por Categoria</title>
+</head>
+<body>
+    <h1>Produtos da categoria {{ categoria }}</h1>
+    <div class="produtos">
+        {% for produto in produtos %}
+        <div class="produto">
+            <h3>{{ produto.nome }}</h3>
+            <img src="{{ produto.foto_url }}" alt="{{ produto.nome }}">
+            <p>Preço: R$ {{ produto.preco }}</p>
+            <p>Cores disponíveis: {{ produto.cor }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

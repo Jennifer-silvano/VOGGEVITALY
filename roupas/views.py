@@ -1,9 +1,9 @@
 # views.py
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.utils import timezone
-from .models import Produto, Categoria, Carrinho
+from .models import Produto, Categoria, Carrinho 
 
 class ProdutoListView(ListView):
     model = Produto
@@ -20,6 +20,9 @@ class ProdutoListView(ListView):
         context = super().get_context_data(**kwargs)
         context['genero'] = self.kwargs.get('genero')
         return context
+    
+
+
 class ProdutoCreateView(CreateView):
     model = Produto
     template_name = 'produto_form.html'
@@ -48,6 +51,13 @@ class CategoriaListView(ListView):
     model = Categoria
     template_name = 'categoria_list.html'
     context_object_name = 'categorias'
+
+def produtos_por_categoria(request, categoria_nome):
+    categoria = get_object_or_404(Categoria, nome=categoria_nome)
+    produtos = Produto.objects.filter(categoria=categoria)
+    return render(request, 'produtos_femininos_categoria.html', {'produtos': produtos, 'categoria': categoria})
+
+
 
 class CarrinhoView(ListView):
     model = Carrinho
