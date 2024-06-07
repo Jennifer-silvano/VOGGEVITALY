@@ -1,9 +1,9 @@
 # views.py
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404,redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.utils import timezone
-from .models import Produto, Categoria, Carrinho 
+from .models import Produto, Categoria, Carrinho
 
 class ProdutoListView(ListView):
     model = Produto
@@ -66,3 +66,13 @@ class CarrinhoView(ListView):
 
     def get_queryset(self):
         return Carrinho.objects.filter(usuario=self.request.user)
+
+def adicionar_carrinho(request):
+    if request.method == 'POST':
+        produto_id = request.POST.get('produto_id')
+        produto = get_object_or_404(Produto, id=produto_id)
+        Carrinho.objects.create(produto=produto, usuario=request.user)
+        
+        return redirect('carrinho')  # Redirecionar para a página inicial após adicionar ao carrinho
+
+    return redirect('categoria_list')

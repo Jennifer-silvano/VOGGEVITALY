@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Carrinho de Compras</title>
+    
+</head>
+<body>
+    <h1>Carrinho de Compras</h1>
+    <h2>Usuário: {{ carrinho.usuario.username }}</h2>
+    <div>
+        {% for item in carrinho.carrinhoproduto_set.all %}
+            <div class="produto">
+                <h3>{{ item.produto.nome }}</h3>
+                <p>Preço: R$ {{ item.produto.preco }}</p>
+                <p>Quantidade: {{ item.quantidade }}</p>
+                <p>Subtotal: R$ {{ item.produto.preco|floatformat:2|add:item.quantidade }}</p>
+                {% if item.produto.foto_url %}
+                    <img src="{{ item.produto.foto_url }}" alt="{{ item.produto.nome }}">
+                {% else %}
+                    <p>Sem imagem disponível</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+    <h3>Total: R$ {{ carrinho.calcular_total|floatformat:2 }}</h3>
+    <h3>Forma de Pagamento: {{ carrinho.forma_pagamento }}</h3>
+</body>
+</html>
